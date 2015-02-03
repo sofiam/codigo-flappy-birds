@@ -1,0 +1,137 @@
+
+
+PImage img1;
+boolean introScreen = true;
+int score = 0;
+boolean end = false;
+
+float rndmA, rndmB;
+
+HLine h1 = new HLine(150, 0, random(2,4),random(0,150),random(0,150)+250); 
+HLine h2 = new HLine(random(0,150), 0, random(2,4),random(0,150),random(0,150)+250); 
+bird b = new bird(250,250,2);
+  
+void setup(){
+  
+  img1 = loadImage("http://undich.net/wordpress/wp-content/uploads/2010/07/Intro.jpg");
+  size(500,500);
+  
+}  
+
+void draw(){
+  if (keyPressed) {
+    if (key == 'i' || key == 'I') {
+      introScreen = false;
+      
+    }
+  }
+  if (introScreen) { //in milliseconds 
+    image(img1, 0, 0);
+    
+  } else {
+    background(#C10E59);
+    h1.update(); 
+    h2.update();
+    //b.mover();
+    //b.drawBird();
+  //  b.colision();
+// b.colisiones(); 
+ 
+  }
+}
+   
+class HLine { 
+  float xpos,speed, ypos;
+  //  boolean cashed= false;
+   
+  HLine (float x, float y, float s, float rAt, float rBt) {  
+
+    xpos = x; 
+    speed = s;
+    ypos = y; 
+    rndmA = rAt;
+    rndmB = rBt;
+  }
+  
+  void update() {
+     xpos+=speed;
+     if (xpos > width) { 
+       xpos = 0; 
+       xpos = 0;
+       rndmA = random(0,200);
+       rndmB = random(0,200)+250;
+     }
+     
+     
+     
+     line(xpos, 0, xpos, rndmA);
+     line(xpos, rndmB, xpos, height);
+    
+  }
+    
+} 
+
+     
+class bird{
+     
+  float xPos,yPos,ySpeed;
+  bird(float x, float y, float s){
+    xPos = x;
+    yPos = y;
+    ySpeed = s;
+  }
+  //especificaciones del pajaro
+  void drawBird(){
+    fill(255);
+    ellipse(xPos,yPos,20,20);
+
+  }
+
+  void mover(){
+    yPos+=ySpeed; 
+    for(int i = 0;i<1;i++){
+
+      text(score,10,40);
+      fill(0);
+      textSize(30);
+    
+      if (mousePressed == true) {
+        ySpeed = -4;
+        yPos += ySpeed;
+        score += 1;
+      } else {
+        ySpeed = 3;
+        yPos += ySpeed;
+      }
+    
+    }
+       
+  }
+  
+  void colision(){
+    if (yPos > height || yPos < 0){
+    end=false;
+    
+    }
+    
+    if (yPos < rndmA || yPos > rndmB){
+      println("NO");
+     end=false;
+      introScreen = true;
+      background(255);
+     
+    } else {
+      println("SI");
+    
+    }
+    
+  }
+  
+        
+            
+    
+  }
+  
+
+
+   
